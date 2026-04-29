@@ -152,6 +152,27 @@
       display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%; margin-bottom: .9rem;
       background: var(--text); color: #fff; font-weight: 800;
     }
+    .onboarding-grid, .payment-grid {
+      display: grid; gap: 1rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .payment-card {
+      display: grid; gap: .7rem;
+    }
+    .payment-card strong {
+      font-size: 1rem;
+    }
+    .payment-card p {
+      margin: 0;
+    }
+    .payment-note {
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      background: rgba(107,78,46,0.08);
+      border: 1px solid rgba(107,78,46,0.14);
+      color: #5b4832;
+      font-size: .95rem;
+    }
 
     .sample {
       display: grid; grid-template-columns: .95fr 1.05fr; gap: 1rem; align-items: stretch;
@@ -183,6 +204,21 @@
     }
     form { display: grid; gap: 1rem; }
     .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
+    .choice-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem;
+    }
+    .choice-card {
+      padding: 1rem;
+      border: 1px solid rgba(19,32,43,0.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.8);
+      display: grid;
+      gap: .55rem;
+    }
+    .choice-card span {
+      color: var(--muted);
+      font-size: .92rem;
+    }
     label { display: grid; gap: .45rem; font-size: .88rem; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; color: #34414a; }
     input, select, textarea {
       width: 100%; border: 1px solid rgba(19,32,43,0.14); border-radius: 14px; padding: .95rem 1rem; background: rgba(255,255,255,0.88);
@@ -223,7 +259,7 @@
     .tiny { font-size: .88rem; }
 
     @media (max-width: 960px) {
-      .hero-grid, .grid-2, .sample, .process, .grid-3 { grid-template-columns: 1fr; }
+      .hero-grid, .grid-2, .sample, .process, .grid-3, .onboarding-grid, .payment-grid { grid-template-columns: 1fr; }
       .nav { flex-wrap: wrap; }
       .nav-links { flex-wrap: wrap; gap: .9rem; }
       h1 { max-width: 14ch; }
@@ -237,7 +273,7 @@
       .lede { font-size: 1rem; }
       .support-line { font-size: .96rem; }
       .card, .hero-card, .sample-box, .form-wrap, .final-cta { padding: 1.05rem; }
-      .form-grid { grid-template-columns: 1fr; }
+      .form-grid, .choice-grid { grid-template-columns: 1fr; }
       .hero-actions, .form-actions { flex-direction: column; align-items: stretch; }
       .button, .quick-intake { width: 100%; }
       .nav-links { display: none; }
@@ -256,7 +292,9 @@
       <nav class="nav-links" aria-label="Primary">
         <a href="#problem">Problem</a>
         <a href="#what">What it does</a>
+        <a href="#onboarding">Onboarding</a>
         <a href="#offers">Offers</a>
+        <a href="#payment">Payment</a>
         <a href="#faq">FAQ</a>
         <a href="#review">Review sample</a>
       </nav>
@@ -430,6 +468,62 @@
       </div>
     </section>
 
+    <section class="section" id="onboarding">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">Onboarding</span>
+          <h2>From tender pack to booked review, the intake stays commercially clear.</h2>
+          <p>ClearTender onboarding is designed to remove uncertainty before the review starts: what is being checked, what package applies, what documents are required, and when the review is booked.</p>
+        </div>
+        <div class="onboarding-grid">
+          <div class="card">
+            <div class="badge">Step 1</div>
+            <h3>Submit the pack</h3>
+            <p>Send the BOQ, pricing schedule, exclusions, assumptions, tender instructions, and any revision-sensitive documents.</p>
+          </div>
+          <div class="card">
+            <div class="badge">Step 2</div>
+            <h3>Confirm scope and turnaround</h3>
+            <p>ClearTender confirms the review level, commercial focus areas, and expected turnaround before work begins.</p>
+          </div>
+          <div class="card">
+            <div class="badge">Step 3</div>
+            <h3>Book and release the review</h3>
+            <p>Once the package and payment route are confirmed, the review is booked and the commercial pass begins.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="payment">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">Payment Facilities</span>
+          <h2>Payment is handled in a straightforward, contractor-friendly way.</h2>
+          <p>No fake checkout widgets and no pretending there is a live finance backend behind the page. The site supports a clean intake and payment instruction flow that can be operationalised immediately.</p>
+        </div>
+        <div class="payment-grid">
+          <div class="card payment-card">
+            <div class="badge">Per tender</div>
+            <strong>EFT on invoice</strong>
+            <p>Best for one-off BOQ checks, tender pricing reviews, or deeper commercial reviews where an invoice is needed before work starts.</p>
+          </div>
+          <div class="card payment-card">
+            <div class="badge">Fast booking</div>
+            <strong>Secure payment link</strong>
+            <p>Best when the contractor wants a quick pay-now instruction after the intake is confirmed and the package is agreed.</p>
+          </div>
+          <div class="card payment-card">
+            <div class="badge">Ongoing support</div>
+            <strong>Monthly pricing desk billing</strong>
+            <p>Best for retained pricing desk clients who want a recurring commercial review arrangement across multiple submissions.</p>
+          </div>
+        </div>
+        <div style="height: 1rem"></div>
+        <div class="payment-note">ClearTender work starts only after the tender pack, review scope, and payment path are confirmed. This keeps the onboarding commercially clean for both sides.</div>
+      </div>
+    </section>
+
     <section class="section" id="review">
       <div class="container">
         <div class="section-title">
@@ -519,6 +613,29 @@
                 </select>
               </label>
             </div>
+            <div class="choice-grid">
+              <label class="choice-card">
+                Review package
+                <select name="package" required>
+                  <option value="">Select package</option>
+                  <option>BOQ Check - R1,500</option>
+                  <option>Tender Pricing Review - R2,500</option>
+                  <option>Commercial Tender Review - R4,500</option>
+                  <option>Pricing Desk - R3,000/month</option>
+                </select>
+                <span>Choose the review level you want booked.</span>
+              </label>
+              <label class="choice-card">
+                Payment method
+                <select name="paymentMethod" required>
+                  <option value="">Select payment method</option>
+                  <option>EFT on invoice</option>
+                  <option>Secure payment link</option>
+                  <option>Monthly pricing desk billing</option>
+                </select>
+                <span>Select how you want the booking to be commercialised.</span>
+              </label>
+            </div>
             <label>
               Upload tender documents
               <input name="documents" type="file" multiple accept=".pdf,.xlsx,.xls,.doc,.docx,.csv,.jpg,.jpeg,.png" />
@@ -528,7 +645,7 @@
               What should be reviewed?
               <textarea name="notes" required placeholder="Tell us what needs checking: BOQ, rates, exclusions, assumptions, risk items, or anything unusual in the tender pack."></textarea>
             </label>
-            <div class="upload-note" id="fileNote">Selected files will be summarised in the email draft. Attach the actual files manually before sending.</div>
+            <div class="upload-note" id="fileNote">Selected files will be summarised in the email draft. Attach the actual files manually before sending. Payment and booking instructions will follow the confirmed package and review scope.</div>
             <div class="form-actions">
               <button class="button button-primary" type="submit">Request a Tender Review</button>
               <a class="quick-intake" href="mailto:reviews@cleartender.co.za?subject=ClearTender%20Review%20Request">Email the review pack</a>
@@ -591,10 +708,12 @@
         const email = String(fd.get('email') || '').trim();
         const company = String(fd.get('company') || '').trim();
         const tenderType = String(fd.get('tenderType') || '').trim();
+        const selectedPackage = String(fd.get('package') || '').trim();
+        const paymentMethod = String(fd.get('paymentMethod') || '').trim();
         const notes = String(fd.get('notes') || '').trim();
         const files = fileInput.files;
 
-        if (!name || !email || !tenderType || !notes) {
+        if (!name || !email || !tenderType || !selectedPackage || !paymentMethod || !notes) {
           status.textContent = 'Please complete the required fields before requesting a review.';
           return;
         }
@@ -608,6 +727,8 @@
           `Email: ${email}`,
           `Company: ${company || '-'}`,
           `Tender type: ${tenderType}`,
+          `Requested package: ${selectedPackage}`,
+          `Preferred payment method: ${paymentMethod}`,
           `Selected files: ${selected}`,
           '',
           'Review notes:',

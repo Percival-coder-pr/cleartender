@@ -14,7 +14,9 @@ Premium static landing page for ClearTender, a South African independent quote a
 - Problem
 - What ClearTender does
 - How it works
+- Onboarding
 - Offers
+- Payment facilities
 - Sample review / redacted review trust section
 - FAQ
 - Upload tender documents form
@@ -42,6 +44,12 @@ Open `index.html` directly in a browser.
 This site is designed to deploy cleanly as a static site on Vercel.
 
 If Vercel needs an explicit config, `vercel.json` keeps the project pinned to the site root.
+
+## Onboarding and payment
+
+- The landing page now includes a dedicated onboarding section and a payment facilities section.
+- The intake form captures the selected review package and preferred payment method.
+- The flow is static-safe and commercially honest: it supports booking, invoice, and payment-link handoff without pretending there is an active payment gateway backend where none has been configured yet.
 
 ## Primary CTA
 
