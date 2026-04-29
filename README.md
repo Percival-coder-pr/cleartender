@@ -1,22 +1,48 @@
 # ClearTender
 
-Premium static landing page for ClearTender, a South African independent quote and tender pricing review service with strongest emphasis on building and civil contractors.
+Premium static landing page for ClearTender, a South African independent quote and tender pricing review service for contractors.
 
-## Files
+## What this project is
 
-- `index.html` - self-contained responsive landing page
-- `vercel.json` - static deployment configuration for Vercel
+- Responsive single-page marketing site
+- Self-contained HTML with embedded CSS and JavaScript
+- Built to present the core offer, trust section, FAQ, and review request form
 
-## Local preview
+## Content included
 
-Open `index.html` directly in a browser, or serve the folder with any static file server.
+- Hero
+- Problem
+- What ClearTender does
+- How it works
+- Offers
+- Sample review / redacted review trust section
+- FAQ
+- Upload tender documents form
+- Final CTA
+- Footer disclaimer
+
+## Brand positioning
+
+ClearTender is positioned as a premium, practical, commercially sharp, margin-conscious review service for South African building and civil contractors.
+
+It is not positioned as:
+
+- admin support
+- virtual assistant work
+- engineering signoff
+- QS certification
+- legal advice
+
+## Local run
+
+Open `index.html` directly in a browser.
 
 ## Deployment
 
-This project is designed to deploy as a static site on Vercel with no build step.
+This site is designed to deploy cleanly as a static site on Vercel.
 
-## Notes
+If Vercel needs an explicit config, `vercel.json` keeps the project pinned to the site root.
 
-- Tone is premium, practical, direct, and commercially sharp.
-- The intake form is intentionally static-safe. It prepares a structured request summary in-browser without pretending there is a live document backend.
-- Disclaimer included on-page: `ClearTender does not provide engineering signoff, QS certification, or legal advice.`
+## Primary CTA
+
+`Request a Tender Review`
