@@ -51,12 +51,15 @@ If Vercel needs an explicit config, `vercel.json` keeps the project pinned to th
 - The intake form captures the selected review package and preferred payment method.
 - The flow is static-safe and commercially honest: it supports booking, invoice, and payment-link handoff without pretending there is an active payment gateway backend where none has been configured yet.
 - A provider-ready Yoco hosted payment flow is included through `api/payment-link.js`.
+- ClearTender is aligned to the same legal/payment identity used by Kinwyse: `Subtle Consulting (Pty) Ltd`.
+- Manual intake and payment support routes to `support@subtleconsulting.co.za`.
 
 ## Vercel environment variable
 
 To activate live card checkout, set this in Vercel project settings:
 
 - `YOCO_PAYMENT_PAGE_URL`
+- or `YOCO_CHECKOUT_URL`
 
 Expected format:
 

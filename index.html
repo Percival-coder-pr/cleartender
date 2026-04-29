@@ -482,7 +482,7 @@
           <p>Ongoing pricing support for contractors who want a commercial review desk on call.</p>
           <div class="offer-actions">
             <a class="button button-primary" href="#upload">Start monthly onboarding</a>
-            <a class="button button-secondary" href="mailto:reviews@cleartender.co.za?subject=Pricing%20Desk%20Onboarding">Request billing setup</a>
+              <a class="button button-secondary" href="mailto:support@subtleconsulting.co.za?subject=Pricing%20Desk%20Onboarding">Request billing setup</a>
           </div>
         </div>
       </div>
@@ -520,7 +520,7 @@
         <div class="section-title">
           <span class="eyebrow">Payment Facilities</span>
           <h2>Payment is handled in a straightforward, contractor-friendly way.</h2>
-          <p>No fake checkout widgets and no pretending there is a live finance backend behind the page. The site supports a clean intake and payment instruction flow that can be operationalised immediately.</p>
+          <p>No fake checkout widgets and no pretending there is a live finance backend behind the page. The site supports a clean intake and payment instruction flow under Subtle Consulting (Pty) Ltd and can be operationalised immediately.</p>
         </div>
         <div class="payment-grid">
           <div class="card payment-card">
@@ -674,7 +674,7 @@
             <div class="upload-note" id="fileNote">Selected files will be summarised in the email draft. Attach the actual files manually before sending. Payment and booking instructions will follow the confirmed package and review scope.</div>
             <div class="form-actions">
               <button class="button button-primary" type="submit">Request a Tender Review</button>
-              <a class="quick-intake" href="mailto:reviews@cleartender.co.za?subject=ClearTender%20Review%20Request">Email the review pack</a>
+              <a class="quick-intake" href="mailto:support@subtleconsulting.co.za?subject=ClearTender%20Review%20Request">Email the review pack</a>
               <a class="button button-secondary" href="#top">Back to top</a>
             </div>
             <p class="status" id="formStatus" aria-live="polite"></p>
@@ -706,7 +706,7 @@
         <div class="disclaimer">South African independent quote and tender pricing review for building and civil contractors.</div>
       </div>
       <div class="disclaimer">
-        <strong>Footer disclaimer:</strong> ClearTender does not provide engineering signoff, QS certification, or legal advice.
+        <strong>Footer disclaimer:</strong> ClearTender is a product of Subtle Consulting (Pty) Ltd and does not provide engineering signoff, QS certification, or legal advice.
       </div>
     </div>
   </footer>
@@ -811,14 +811,14 @@
           }).catch((error) => {
             status.textContent = error.message || 'Payment link could not be created right now. A manual review request email will open instead.';
             status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            window.location.href = `mailto:reviews@cleartender.co.za?subject=${subject}&body=${body}`;
-          });
-          return;
-        }
+            window.location.href = `mailto:support@subtleconsulting.co.za?subject=${subject}&body=${body}`;
+            });
+            return;
+          }
 
-        status.textContent = 'Preparing your email draft. Attach the actual tender files before sending, or use the email option above if you prefer a manual handoff.';
-        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        window.location.href = `mailto:reviews@cleartender.co.za?subject=${subject}&body=${body}`;
+          status.textContent = 'Preparing your email draft. Attach the actual tender files before sending, or use the email option above if you prefer a manual handoff.';
+          status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        window.location.href = `mailto:support@subtleconsulting.co.za?subject=${subject}&body=${body}`;
       });
     })();
   </script>

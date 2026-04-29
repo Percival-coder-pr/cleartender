@@ -6,12 +6,12 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const paymentPageUrl = process.env.YOCO_PAYMENT_PAGE_URL || '';
+  const paymentPageUrl = process.env.YOCO_PAYMENT_PAGE_URL || process.env.YOCO_CHECKOUT_URL || '';
   if (!paymentPageUrl) {
     res.statusCode = 503;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({
-      error: 'Card checkout is not configured yet. Add YOCO_PAYMENT_PAGE_URL in Vercel, or use EFT on invoice or manual intake.'
+      error: 'Card checkout is not configured yet. Add YOCO_PAYMENT_PAGE_URL or YOCO_CHECKOUT_URL in Vercel, or use EFT on invoice or manual intake.'
     }));
     return;
   }
