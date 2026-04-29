@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="ClearTender gives South African building and civil contractors an independent second review of BOQs, rates, assumptions, exclusions, and pricing risk before the tender goes out." />
   <meta name="theme-color" content="#0f1720" />
+  <meta property="og:title" content="ClearTender | Independent Tender Pricing Review" />
+  <meta property="og:description" content="Independent second review of BOQs, rates, assumptions, exclusions, and pricing risk for South African building and civil contractors." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cleartender.vercel.app/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ClearTender | Independent Tender Pricing Review" />
+  <meta name="twitter:description" content="Independent second review of BOQs, rates, assumptions, exclusions, and pricing risk before tender submission." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230f1720'/%3E%3Cpath d='M18 20h28v7H25v7h17v7H25v13h-7z' fill='%23f5f2eb'/%3E%3C/svg%3E" />
   <title>ClearTender | Independent Tender Pricing Review</title>
   <style>
     :root {
@@ -188,6 +196,14 @@
     }
     .form-actions { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; }
     .status { min-height: 1.2rem; color: var(--accent); font-weight: 600; }
+    .quick-intake {
+      display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+      border-radius: 999px; padding: .9rem 1.2rem; border: 1px solid rgba(19,32,43,0.16);
+      font-weight: 650; transition: .2s ease; cursor: pointer;
+      background: transparent; color: var(--text);
+    }
+    .quick-intake:hover { transform: translateY(-1px); }
+    .quick-intake:focus-visible { outline: none; box-shadow: var(--focus); }
 
     .final-cta {
       background: linear-gradient(145deg, #102029, #182a35 56%, #223743);
@@ -215,11 +231,15 @@
 
     @media (max-width: 640px) {
       .container { width: min(var(--max), calc(100% - 1.1rem)); }
-      .hero { padding-top: 3.2rem; }
+      .hero { padding-top: 2.8rem; }
       h1 { font-size: clamp(2.25rem, 11vw, 3.35rem); }
+      h2 { font-size: clamp(1.75rem, 8vw, 2.35rem); }
+      .lede { font-size: 1rem; }
+      .support-line { font-size: .96rem; }
+      .card, .hero-card, .sample-box, .form-wrap, .final-cta { padding: 1.05rem; }
       .form-grid { grid-template-columns: 1fr; }
       .hero-actions, .form-actions { flex-direction: column; align-items: stretch; }
-      .button { width: 100%; }
+      .button, .quick-intake { width: 100%; }
       .nav-links { display: none; }
     }
   </style>
@@ -511,6 +531,7 @@
             <div class="upload-note" id="fileNote">Selected files will be summarised in the email draft. Attach the actual files manually before sending.</div>
             <div class="form-actions">
               <button class="button button-primary" type="submit">Request a Tender Review</button>
+              <a class="quick-intake" href="mailto:reviews@cleartender.co.za?subject=ClearTender%20Review%20Request">Email the review pack</a>
               <a class="button button-secondary" href="#top">Back to top</a>
             </div>
             <p class="status" id="formStatus" aria-live="polite"></p>
@@ -595,7 +616,8 @@
           'Please confirm the best package and turnaround.'
         ].join('\n'));
 
-        status.textContent = 'Preparing your email draft. Attach the actual tender files before sending.';
+        status.textContent = 'Preparing your email draft. Attach the actual tender files before sending, or use the email option above if you prefer a manual handoff.';
+        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         window.location.href = `mailto:estimates@subtleconsulting.co.za?subject=${subject}&body=${body}`;
       });
     })();
