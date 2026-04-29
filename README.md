@@ -50,6 +50,25 @@ If Vercel needs an explicit config, `vercel.json` keeps the project pinned to th
 - The landing page now includes a dedicated onboarding section and a payment facilities section.
 - The intake form captures the selected review package and preferred payment method.
 - The flow is static-safe and commercially honest: it supports booking, invoice, and payment-link handoff without pretending there is an active payment gateway backend where none has been configured yet.
+- A provider-ready Yoco hosted payment flow is included through `api/payment-link.js`.
+
+## Vercel environment variable
+
+To activate live card checkout, set this in Vercel project settings:
+
+- `YOCO_PAYMENT_PAGE_URL`
+
+Expected format:
+
+- `https://pay.yoco.com/your-payment-page`
+
+The site will then generate prefilled hosted checkout links using Yoco-style payment page parameters for:
+
+- `amount`
+- `reference`
+- `firstName`
+- `email`
+- `redirectOnPaymentSuccess`
 
 ## Primary CTA
 

@@ -138,6 +138,9 @@
     .offer {
       display: flex; flex-direction: column; gap: .6rem; height: 100%;
     }
+    .offer-actions {
+      display: flex; flex-wrap: wrap; gap: .7rem; margin-top: auto; padding-top: .55rem;
+    }
     .price { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.04em; }
     .badge {
       display: inline-flex; align-items: center; gap: .35rem; width: fit-content;
@@ -276,6 +279,7 @@
       .form-grid, .choice-grid { grid-template-columns: 1fr; }
       .hero-actions, .form-actions { flex-direction: column; align-items: stretch; }
       .button, .quick-intake { width: 100%; }
+      .offer-actions { flex-direction: column; }
       .nav-links { display: none; }
     }
   </style>
@@ -444,18 +448,30 @@
             <h3>BOQ Check</h3>
             <div class="price">R1,500</div>
             <p>Quick check for obvious omissions, structure issues, and pricing hygiene.</p>
+            <div class="offer-actions">
+              <button class="button button-primary pay-now" type="button" data-package="BOQ Check" data-amount="1500">Pay and book</button>
+              <a class="button button-secondary" href="#upload">Request manually</a>
+            </div>
           </div>
           <div class="card offer">
             <span class="badge">Most requested</span>
             <h3>Tender Pricing Review</h3>
             <div class="price">R2,500</div>
             <p>Independent second review of rates, assumptions, exclusions, and tender risk.</p>
+            <div class="offer-actions">
+              <button class="button button-primary pay-now" type="button" data-package="Tender Pricing Review" data-amount="2500">Pay and book</button>
+              <a class="button button-secondary" href="#upload">Request manually</a>
+            </div>
           </div>
           <div class="card offer">
             <span class="badge">Deeper commercial pass</span>
             <h3>Commercial Tender Review</h3>
             <div class="price">R4,500</div>
             <p>Stronger commercial lens for larger or more competitive submissions.</p>
+            <div class="offer-actions">
+              <button class="button button-primary pay-now" type="button" data-package="Commercial Tender Review" data-amount="4500">Pay and book</button>
+              <a class="button button-secondary" href="#upload">Request manually</a>
+            </div>
           </div>
         </div>
         <div style="height: 1rem"></div>
@@ -464,6 +480,10 @@
           <h3>Pricing Desk</h3>
           <div class="price">R3,000/month</div>
           <p>Ongoing pricing support for contractors who want a commercial review desk on call.</p>
+          <div class="offer-actions">
+            <a class="button button-primary" href="#upload">Start monthly onboarding</a>
+            <a class="button button-secondary" href="mailto:reviews@cleartender.co.za?subject=Pricing%20Desk%20Onboarding">Request billing setup</a>
+          </div>
         </div>
       </div>
     </section>
@@ -521,6 +541,12 @@
         </div>
         <div style="height: 1rem"></div>
         <div class="payment-note">ClearTender work starts only after the tender pack, review scope, and payment path are confirmed. This keeps the onboarding commercially clean for both sides.</div>
+        <div style="height: 1rem"></div>
+        <div class="card payment-card">
+          <div class="badge">Live card checkout</div>
+          <strong>Yoco hosted payment page</strong>
+          <p>Card checkout is designed to run through a secure Yoco-hosted payment page. Package buttons on this site can redirect directly into a prefilled payment session when the merchant payment page URL is configured.</p>
+        </div>
       </div>
     </section>
 
@@ -691,14 +717,48 @@
       const status = document.getElementById('formStatus');
       const fileNote = document.getElementById('fileNote');
       const fileInput = form.elements.documents;
+      const payButtons = Array.from(document.querySelectorAll('.pay-now'));
 
       function summarizeFiles(files) {
         if (!files || !files.length) return 'No files selected yet.';
         return Array.from(files).map(f => `${f.name} (${Math.round(f.size / 1024)} KB)`).join('; ');
       }
 
+      async function buildPaymentLink(payload) {
+        const response = await fetch('/api/payment-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || 'Payment link could not be created.');
+        }
+        return data.redirectUrl;
+      }
+
       fileInput.addEventListener('change', () => {
         fileNote.textContent = 'Selected files: ' + summarizeFiles(fileInput.files);
+      });
+
+      payButtons.forEach((button) => {
+        button.addEventListener('click', async () => {
+          const reviewPackage = button.getAttribute('data-package') || '';
+          const amount = Number(button.getAttribute('data-amount') || '0');
+          status.textContent = 'Preparing secure checkout...';
+          try {
+            const redirectUrl = await buildPaymentLink({
+              reviewPackage,
+              amount,
+              reference: reviewPackage,
+              redirectSuccess: `${window.location.origin}${window.location.pathname}#upload`
+            });
+            window.location.href = redirectUrl;
+          } catch (error) {
+            status.textContent = error.message || 'Payment link could not be created right now. Use the manual request form below.';
+            document.getElementById('upload')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
       });
 
       form.addEventListener('submit', (e) => {
@@ -737,9 +797,28 @@
           'Please confirm the best package and turnaround.'
         ].join('\n'));
 
+        if (paymentMethod === 'Secure payment link') {
+          status.textContent = 'Preparing secure checkout...';
+          buildPaymentLink({
+            reviewPackage: selectedPackage,
+            amount: Number(selectedPackage.match(/R([\d,]+)/)?.[1]?.replace(/,/g, '') || '0'),
+            reference: `${selectedPackage} - ${company || name}`,
+            firstName: name.split(' ')[0] || name,
+            email,
+            redirectSuccess: `${window.location.origin}${window.location.pathname}#payment`
+          }).then((redirectUrl) => {
+            window.location.href = redirectUrl;
+          }).catch((error) => {
+            status.textContent = error.message || 'Payment link could not be created right now. A manual review request email will open instead.';
+            status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            window.location.href = `mailto:reviews@cleartender.co.za?subject=${subject}&body=${body}`;
+          });
+          return;
+        }
+
         status.textContent = 'Preparing your email draft. Attach the actual tender files before sending, or use the email option above if you prefer a manual handoff.';
         status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        window.location.href = `mailto:estimates@subtleconsulting.co.za?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:reviews@cleartender.co.za?subject=${subject}&body=${body}`;
       });
     })();
   </script>
