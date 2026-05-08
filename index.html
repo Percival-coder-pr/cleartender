@@ -1,4 +1,4 @@
-ï»¿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -340,7 +340,7 @@
       <div class="container hero-grid">
         <div>
           <span class="eyebrow">Independent tender pricing review for South African contractors</span>
-          <h1>Price the tender properly before it costs you the job â€” or the margin.</h1>
+          <h1>Price the tender properly before it costs you the job — or the margin.</h1>
           <p class="lede">ClearTender gives building and civil contractors a focused commercial second review of BOQs, rates, assumptions, exclusions, and pricing risk before submission.</p>
           <p class="support-line">Professional tender review without the slow admin-heavy process: clear scope, clear feedback, clear next action.</p>
           <div class="hero-actions">
@@ -384,7 +384,7 @@
         <div class="section-title">
           <span class="eyebrow">The problem</span>
           <h2>Tender pricing is where small misses become expensive problems.</h2>
-          <p>One omitted item, one soft assumption, one underpriced rate, or one unclear exclusion can shift the outcome from profitable to painful. Contractors do not need more noise â€” they need a sober commercial review before submission.</p>
+          <p>One omitted item, one soft assumption, one underpriced rate, or one unclear exclusion can shift the outcome from profitable to painful. Contractors do not need more noise — they need a sober commercial review before submission.</p>
         </div>
         <div class="grid-3">
           <div class="card">
@@ -752,12 +752,6 @@
               <input name="documents" type="file" multiple accept=".pdf,.xlsx,.xls,.doc,.docx,.csv,.jpg,.jpeg,.png" />
             </label>
             <p class="help">Accepted files: PDFs, spreadsheets, Word docs, images, and supporting documents. If the browser blocks attachments in email, list the file names below and attach them manually.</p>
-<<<<<<< HEAD
-            <label>
-              What should be reviewed?
-              <textarea name="notes" required placeholder="Tell us what needs checking: BOQ, rates, exclusions, assumptions, risk items, or anything unusual in the tender pack."></textarea>
-            </label>
-=======
               <label>
                 What should be reviewed?
                 <textarea
@@ -767,7 +761,6 @@
                   placeholder="Tell us what needs checking: BOQ, rates, exclusions, assumptions, risk items, or anything unusual in the tender pack."
                 ></textarea>
               </label>
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
             <div class="upload-note" id="fileNote">Selected files will be listed in the email draft. Attach the actual files manually before sending. The review conversation will start from the tender context and risk areas you provide.</div>
             <div class="form-actions">
               <button class="button button-primary" type="submit">Request a Tender Review</button>
@@ -817,9 +810,6 @@
       const fileInput = form.elements.documents;
       const checkoutButton = document.getElementById('checkoutButton');
       const checkoutPackages = new Set(['tender-review', 'tender-pricing', 'tender-pricing-review', 'commercial-tender-review']);
-<<<<<<< HEAD
-
-=======
       const MAX_TEXT_LENGTH = 2000;
 
       function sanitizeText(value, maxLength = MAX_TEXT_LENGTH) {
@@ -833,7 +823,6 @@
         return String(value || '').trim().slice(0, 254);
       }
 
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
       function summarizeFiles(files) {
         if (!files || !files.length) return 'No files selected';
         return Array.from(files).map((f) => f.name).join(', ');
@@ -846,16 +835,6 @@
       function buildPayload() {
         const fd = new FormData(form);
         return {
-<<<<<<< HEAD
-          name: String(fd.get('name') || '').trim(),
-          email: String(fd.get('email') || '').trim(),
-          company: String(fd.get('company') || '').trim(),
-          tenderType: String(fd.get('tenderType') || '').trim(),
-          reviewFocus: String(fd.get('reviewFocus') || '').trim(),
-          estimatedValue: String(fd.get('estimatedValue') || '').trim(),
-          competitiveSetCount: String(fd.get('competitiveSetCount') || '').trim(),
-          notes: String(fd.get('notes') || '').trim()
-=======
           name: sanitizeText(fd.get('name'), 120),
           email: sanitizeEmail(fd.get('email')),
           company: sanitizeText(fd.get('company'), 160),
@@ -864,7 +843,6 @@
           estimatedValue: String(fd.get('estimatedValue') || '').trim(),
           competitiveSetCount: String(fd.get('competitiveSetCount') || '').trim(),
           notes: sanitizeText(fd.get('notes'), 2500)
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
         };
       }
 
@@ -887,8 +865,6 @@
           return false;
         }
 
-<<<<<<< HEAD
-=======
         if (payload.name.length > 120) {
           setStatus('Your name is too long.');
           return false;
@@ -915,7 +891,6 @@
           }
         }
 
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
         return true;
       }
 
@@ -1012,11 +987,7 @@
           return;
         }
 
-<<<<<<< HEAD
-        const subject = encodeURIComponent(`ClearTender review request ï¿½ ${payload.company || payload.name}`);
-=======
         const subject = encodeURIComponent(`ClearTender review request - ${payload.company || payload.name}`);
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
         const body = encodeURIComponent(buildMailBody(payload));
 
         setStatus('Preparing your email draft. Attach the actual tender files before sending, or use the email option above if you prefer a manual handoff.');

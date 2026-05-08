@@ -54,11 +54,8 @@ test('uses server-owned package pricing for both legacy and tender-review packag
   const response = await callPaymentLink({
     body: {
       packageId: 'tender-review',
-<<<<<<< HEAD
-=======
       firstName: 'ACME Leads',
       email: 'admin@example.com',
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
       amount: 1,
       referenceSuffix: 'ACME Builders'
     }
@@ -78,11 +75,8 @@ test('uses server-owned package pricing for both legacy and tender-review packag
   const legacyResponse = await callPaymentLink({
     body: {
       packageId: 'boq-check',
-<<<<<<< HEAD
-=======
       firstName: 'ACME Leads',
       email: 'admin@example.com',
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
       amount: 1,
       referenceSuffix: 'Legacy'
     }
@@ -102,11 +96,8 @@ test('uses server-owned package pricing for both legacy and tender-review packag
   const pricing = await callPaymentLink({
     body: {
       packageId: 'tender-pricing',
-<<<<<<< HEAD
-=======
       firstName: 'ACME Leads',
       email: 'admin@example.com',
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
       referenceSuffix: 'ACME Builders - Tender Pack'
     }
   });
@@ -124,10 +115,6 @@ test('uses server-owned package pricing for both legacy and tender-review packag
 });
 
 test('rejects monthly billing and unknown package ids for card checkout', async () => {
-<<<<<<< HEAD
-  const monthly = await callPaymentLink({ body: { packageId: 'pricing-desk' } });
-  const unknown = await callPaymentLink({ body: { packageId: 'discounted-review' } });
-=======
   const monthly = await callPaymentLink({
     body: {
       packageId: 'pricing-desk',
@@ -142,7 +129,6 @@ test('rejects monthly billing and unknown package ids for card checkout', async 
       email: 'admin@example.com'
     }
   });
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
 
   assert.equal(monthly.statusCode, 400);
   assert.equal(unknown.statusCode, 400);
@@ -152,11 +138,8 @@ test('keeps success redirects on the ClearTender origin', async () => {
   const response = await callPaymentLink({
     body: {
       packageId: 'commercial-tender-review',
-<<<<<<< HEAD
-=======
       firstName: 'ACME Leads',
       email: 'admin@example.com',
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
       redirectPath: 'https://example.com/paid'
     }
   });
@@ -172,15 +155,11 @@ test('keeps success redirects on the ClearTender origin', async () => {
 
 test('returns a clear unavailable response when checkout is not configured', async () => {
   const response = await callPaymentLink({
-<<<<<<< HEAD
-    body: { packageId: 'boq-check' },
-=======
     body: {
       packageId: 'boq-check',
       firstName: 'ACME Leads',
       email: 'admin@example.com'
     },
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
     envUrl: ''
   });
 
@@ -196,8 +175,6 @@ test('rejects unsupported methods', async () => {
 
   assert.equal(response.statusCode, 405);
 });
-<<<<<<< HEAD
-=======
 
 test('rejects malformed JSON payloads', async () => {
   const response = await callPaymentLink({
@@ -207,4 +184,3 @@ test('rejects malformed JSON payloads', async () => {
   assert.equal(response.statusCode, 400);
   assert.equal(response.body.error, 'Invalid request payload.');
 });
->>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
