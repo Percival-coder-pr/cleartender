@@ -1,4 +1,4 @@
-# ClearTender
+﻿# ClearTender
 
 Premium static landing page for ClearTender, a South African independent quote and tender pricing review service for contractors.
 
@@ -6,7 +6,7 @@ Premium static landing page for ClearTender, a South African independent quote a
 
 - Responsive single-page marketing site
 - Self-contained HTML with embedded CSS and JavaScript
-- Built to present the core offer, trust section, FAQ, and review request form
+- Built to present the core positioning, trust section, FAQ, and review request form
 
 ## Content included
 
@@ -15,11 +15,12 @@ Premium static landing page for ClearTender, a South African independent quote a
 - What ClearTender does
 - How it works
 - Onboarding
-- Offers
-- Payment facilities
+- Review focus
+- Pricing
+- Business value
 - Sample review / redacted review trust section
 - FAQ
-- Upload tender documents form
+- Review request email form with tender document filename summary
 - Final CTA
 - Footer disclaimer
 
@@ -45,33 +46,21 @@ This site is designed to deploy cleanly as a static site on Vercel.
 
 If Vercel needs an explicit config, `vercel.json` keeps the project pinned to the site root.
 
-## Onboarding and payment
+## Current public emphasis
 
-- The landing page now includes a dedicated onboarding section and a payment facilities section.
-- The intake form captures the selected review package and preferred payment method.
-- The flow is static-safe and commercially honest: it supports booking, invoice, and payment-link handoff without pretending there is an active payment gateway backend where none has been configured yet.
-- A provider-ready Yoco hosted payment flow is included through `api/payment-link.js`.
-- ClearTender is aligned to the same legal/payment identity used by Kinwyse: `Subtle Consulting (Pty) Ltd`.
-- Manual intake and payment support routes to `support@subtleconsulting.co.za`.
+- Advertise the business value of independent tender review
+- Focus on margin protection, pricing clarity, omissions, assumptions, exclusions, and commercial risk
+- Use transparent pricing as a trust signal
+- Route enquiries through the static email handoff form to `cleartender@subtleconsulting.co.za`
 
-## Vercel environment variable
+## Public pricing
 
-To activate live card checkout, set this in Vercel project settings:
+- Tender Review: `R950`
+- Tender Pricing Review: `R1,950`
+- Commercial Risk Review: `R3,950`
+- Pricing Desk: `From R2,250/month`
 
-- `YOCO_PAYMENT_PAGE_URL`
-- or `YOCO_CHECKOUT_URL`
-
-Expected format:
-
-- `https://pay.yoco.com/your-payment-page`
-
-The site will then generate prefilled hosted checkout links using Yoco-style payment page parameters for:
-
-- `amount`
-- `reference`
-- `firstName`
-- `email`
-- `redirectOnPaymentSuccess`
+Pricing is introductory and assumes usable tender documents. Large, incomplete, or urgent packs may need a scoped quote.
 
 ## Primary CTA
 

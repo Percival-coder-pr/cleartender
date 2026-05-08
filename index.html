@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -135,13 +135,41 @@
     .card p, .card li { color: var(--muted); }
     .card ul { margin: .7rem 0 0; padding-left: 1.1rem; }
 
-    .offer {
+    .service-card {
       display: flex; flex-direction: column; gap: .6rem; height: 100%;
     }
-    .offer-actions {
+    .service-actions {
       display: flex; flex-wrap: wrap; gap: .7rem; margin-top: auto; padding-top: .55rem;
     }
-    .price { font-size: 1.65rem; font-weight: 800; letter-spacing: -0.04em; }
+    .value-point { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+    .price {
+      font-size: 1.9rem;
+      font-weight: 850;
+      letter-spacing: -0.04em;
+      color: var(--text);
+    }
+    .price small {
+      display: block;
+      margin-top: .2rem;
+      font-size: .86rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      color: var(--muted);
+    }
+    .pricing-card {
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      height: 100%;
+    }
+    .pricing-note {
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      background: rgba(31,79,90,0.08);
+      border: 1px solid rgba(31,79,90,0.14);
+      color: #27444b;
+      font-size: .95rem;
+    }
     .badge {
       display: inline-flex; align-items: center; gap: .35rem; width: fit-content;
       padding: .4rem .65rem; border-radius: 999px; background: rgba(107,78,46,0.08); color: var(--accent-2); font-size: .82rem; font-weight: 700;
@@ -155,20 +183,20 @@
       display: inline-grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%; margin-bottom: .9rem;
       background: var(--text); color: #fff; font-weight: 800;
     }
-    .onboarding-grid, .payment-grid {
+    .onboarding-grid, .value-grid {
       display: grid; gap: 1rem;
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    .payment-card {
+    .value-card {
       display: grid; gap: .7rem;
     }
-    .payment-card strong {
+    .value-card strong {
       font-size: 1rem;
     }
-    .payment-card p {
+    .value-card p {
       margin: 0;
     }
-    .payment-note {
+    .value-note {
       padding: 1rem 1.1rem;
       border-radius: 18px;
       background: rgba(107,78,46,0.08);
@@ -262,7 +290,7 @@
     .tiny { font-size: .88rem; }
 
     @media (max-width: 960px) {
-      .hero-grid, .grid-2, .sample, .process, .grid-3, .onboarding-grid, .payment-grid { grid-template-columns: 1fr; }
+      .hero-grid, .grid-2, .sample, .process, .grid-3, .onboarding-grid, .value-grid { grid-template-columns: 1fr; }
       .nav { flex-wrap: wrap; }
       .nav-links { flex-wrap: wrap; gap: .9rem; }
       h1 { max-width: 14ch; }
@@ -279,7 +307,7 @@
       .form-grid, .choice-grid { grid-template-columns: 1fr; }
       .hero-actions, .form-actions { flex-direction: column; align-items: stretch; }
       .button, .quick-intake { width: 100%; }
-      .offer-actions { flex-direction: column; }
+      .service-actions { flex-direction: column; }
       .nav-links { display: none; }
     }
   </style>
@@ -297,8 +325,9 @@
         <a href="#problem">Problem</a>
         <a href="#what">What it does</a>
         <a href="#onboarding">Onboarding</a>
-        <a href="#offers">Offers</a>
-        <a href="#payment">Payment</a>
+        <a href="#focus">Review focus</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#value">Value</a>
         <a href="#faq">FAQ</a>
         <a href="#review">Review sample</a>
       </nav>
@@ -310,13 +339,13 @@
     <section class="hero" id="top">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow">South African independent quote and tender pricing review</span>
+          <span class="eyebrow">Independent tender pricing review for South African contractors</span>
           <h1>Price the tender properly before it costs you the job — or the margin.</h1>
-          <p class="lede">ClearTender gives South African building and civil contractors an independent second review of BOQs, rates, assumptions, exclusions, and pricing risk before the tender goes out.</p>
-          <p class="support-line">For contractors who need fewer omissions, clearer pricing, and more confidence before submission.</p>
+          <p class="lede">ClearTender gives building and civil contractors a focused commercial second review of BOQs, rates, assumptions, exclusions, and pricing risk before submission.</p>
+          <p class="support-line">Professional tender review without the slow admin-heavy process: clear scope, clear feedback, clear next action.</p>
           <div class="hero-actions">
             <a class="button button-primary" href="#upload">Request a Tender Review</a>
-            <a class="button button-secondary" href="#offers">View offers</a>
+            <a class="button button-secondary" href="#pricing">View pricing</a>
           </div>
           <div class="grid-2">
             <div class="card">
@@ -339,8 +368,8 @@
             <span>Focus on omissions, margin pressure, scope gaps, and pricing clarity.</span>
           </div>
           <div class="callout">
-            <small>Primary CTA</small>
-            <p>Request a Tender Review when you need the pricing checked before the bid goes out.</p>
+            <small>Transparent pricing</small>
+            <p>Introductory review pricing starts at R950, with a lean process built for contractors under tender pressure.</p>
           </div>
           <div class="hero-stat">
             <strong>Restraint and realism</strong>
@@ -435,54 +464,116 @@
       </div>
     </section>
 
-    <section class="section" id="offers">
+    <section class="section" id="focus">
       <div class="container">
         <div class="section-title">
-          <span class="eyebrow">Offers</span>
-          <h2>Choose the level of review that matches the job pressure.</h2>
-          <p>Simple, direct pricing. No fluff. No hidden bundles.</p>
+          <span class="eyebrow">Review focus</span>
+          <h2>Choose the commercial lens that matches the tender pressure.</h2>
+          <p>ClearTender is built to surface the issues that usually stay hidden until they become expensive: missing scope, weak assumptions, thin rates, and unclear exclusions.</p>
         </div>
         <div class="grid-3">
-          <div class="card offer">
+          <div class="card service-card">
             <span class="badge">Entry review</span>
-            <h3>BOQ Check</h3>
-            <div class="price">R1,500</div>
+            <h3>Tender Review</h3>
+            <div class="value-point">Completeness and structure</div>
             <p>Quick check for obvious omissions, structure issues, and pricing hygiene.</p>
-            <div class="offer-actions">
-              <button class="button button-primary pay-now" type="button" data-package="BOQ Check" data-amount="1500">Pay and book</button>
-              <a class="button button-secondary" href="#upload">Request manually</a>
+            <div class="service-actions">
+              <a class="button button-primary" href="#upload">Request review</a>
             </div>
           </div>
-          <div class="card offer">
+          <div class="card service-card">
             <span class="badge">Most requested</span>
             <h3>Tender Pricing Review</h3>
-            <div class="price">R2,500</div>
+            <div class="value-point">Rates, assumptions, exclusions</div>
             <p>Independent second review of rates, assumptions, exclusions, and tender risk.</p>
-            <div class="offer-actions">
-              <button class="button button-primary pay-now" type="button" data-package="Tender Pricing Review" data-amount="2500">Pay and book</button>
-              <a class="button button-secondary" href="#upload">Request manually</a>
+            <div class="service-actions">
+              <a class="button button-primary" href="#upload">Request review</a>
             </div>
           </div>
-          <div class="card offer">
+          <div class="card service-card">
             <span class="badge">Deeper commercial pass</span>
             <h3>Commercial Tender Review</h3>
-            <div class="price">R4,500</div>
+            <div class="value-point">Submission risk and margin pressure</div>
             <p>Stronger commercial lens for larger or more competitive submissions.</p>
-            <div class="offer-actions">
-              <button class="button button-primary pay-now" type="button" data-package="Commercial Tender Review" data-amount="4500">Pay and book</button>
-              <a class="button button-secondary" href="#upload">Request manually</a>
+            <div class="service-actions">
+              <a class="button button-primary" href="#upload">Request review</a>
             </div>
           </div>
         </div>
         <div style="height: 1rem"></div>
-        <div class="card offer" style="max-width: 28rem;">
+        <div class="card service-card" style="max-width: 28rem;">
           <span class="badge">Ongoing support</span>
           <h3>Pricing Desk</h3>
-          <div class="price">R3,000/month</div>
+          <div class="value-point">Ongoing commercial review support</div>
           <p>Ongoing pricing support for contractors who want a commercial review desk on call.</p>
-          <div class="offer-actions">
-            <a class="button button-primary" href="#upload">Start monthly onboarding</a>
-              <a class="button button-secondary" href="mailto:support@subtleconsulting.co.za?subject=Pricing%20Desk%20Onboarding">Request billing setup</a>
+          <div class="service-actions">
+            <a class="button button-primary" href="#upload">Start the conversation</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <div class="section-title">
+          <span class="eyebrow">Pricing</span>
+          <h2>Clear pricing for contractors who need the review to move fast.</h2>
+          <p>Introductory pricing is set below comparable public tender-preparation and QS-style pricing anchors while focusing on ClearTender's narrower value: an independent commercial review before submission.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card pricing-card">
+            <span class="badge">Fast screen</span>
+            <h3>Tender Review</h3>
+            <div class="price">R950<small>once-off review</small></div>
+            <p>For smaller tenders or a quick second set of eyes before the bid goes out.</p>
+            <ul>
+              <li>Obvious omissions and structure gaps</li>
+              <li>Pricing hygiene observations</li>
+              <li>Short action note</li>
+            </ul>
+            <div class="service-actions">
+              <a class="button button-primary" href="#upload">Request this review</a>
+            </div>
+          </div>
+          <div class="card pricing-card">
+            <span class="badge">Best value</span>
+            <h3>Tender Pricing Review</h3>
+            <div class="price">R1,950<small>once-off review</small></div>
+            <p>For contractors who need a stronger review of rates, assumptions, exclusions, and submission risk.</p>
+            <ul>
+              <li>BOQ and rate logic review</li>
+              <li>Assumptions and exclusions check</li>
+              <li>Prioritised commercial risk notes</li>
+            </ul>
+            <div class="service-actions">
+              <a class="button button-primary" href="#upload">Request this review</a>
+            </div>
+          </div>
+          <div class="card pricing-card">
+            <span class="badge">High-pressure tender</span>
+            <h3>Commercial Risk Review</h3>
+            <div class="price">R3,950<small>once-off review</small></div>
+            <p>For larger or more competitive submissions where margin, scope, and exclusions need tighter control.</p>
+            <ul>
+              <li>Deeper commercial risk pass</li>
+              <li>Submission readiness notes</li>
+              <li>Focused review call where practical</li>
+            </ul>
+            <div class="service-actions">
+              <a class="button button-primary" href="#upload">Request this review</a>
+            </div>
+          </div>
+        </div>
+        <div style="height: 1rem"></div>
+        <div class="grid-2">
+          <div class="card pricing-card">
+            <span class="badge">Ongoing support</span>
+            <h3>Pricing Desk</h3>
+            <div class="price">From R2,250<small>per month, scope dependent</small></div>
+            <p>For contractors who want recurring tender pricing review support across multiple submissions.</p>
+          </div>
+          <div class="pricing-note">
+            Pricing is introductory and assumes documents are supplied in a usable format. Very large, incomplete, or urgent packs may need a scoped quote before review starts.
           </div>
         </div>
       </div>
@@ -491,62 +582,56 @@
     <section class="section" id="onboarding">
       <div class="container">
         <div class="section-title">
-          <span class="eyebrow">Onboarding</span>
-          <h2>From tender pack to booked review, the intake stays commercially clear.</h2>
-          <p>ClearTender onboarding is designed to remove uncertainty before the review starts: what is being checked, what package applies, what documents are required, and when the review is booked.</p>
+          <span class="eyebrow">Process</span>
+          <h2>A leaner process than full tender administration.</h2>
+          <p>ClearTender does not try to take over the tender. It gives the contractor team a focused independent review so they can correct the commercial position quickly.</p>
         </div>
         <div class="onboarding-grid">
           <div class="card">
             <div class="badge">Step 1</div>
-            <h3>Submit the pack</h3>
-            <p>Send the BOQ, pricing schedule, exclusions, assumptions, tender instructions, and any revision-sensitive documents.</p>
+            <h3>Send the pack</h3>
+            <p>Share the BOQ, pricing schedule, assumptions, exclusions, tender instructions, and key deadlines.</p>
           </div>
           <div class="card">
             <div class="badge">Step 2</div>
-            <h3>Confirm scope and turnaround</h3>
-            <p>ClearTender confirms the review level, commercial focus areas, and expected turnaround before work begins.</p>
+            <h3>Confirm the review lane</h3>
+            <p>ClearTender confirms whether the tender needs a quick BOQ check, standard pricing review, or deeper commercial risk pass.</p>
           </div>
           <div class="card">
             <div class="badge">Step 3</div>
-            <h3>Book and release the review</h3>
-            <p>Once the package and payment route are confirmed, the review is booked and the commercial pass begins.</p>
+            <h3>Get practical feedback</h3>
+            <p>You receive clear notes on the issues most likely to affect scope, margin, assumptions, exclusions, and submission confidence.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="payment">
+    <section class="section" id="value">
       <div class="container">
         <div class="section-title">
-          <span class="eyebrow">Payment Facilities</span>
-          <h2>Payment is handled in a straightforward, contractor-friendly way.</h2>
-          <p>No fake checkout widgets and no pretending there is a live finance backend behind the page. The site supports a clean intake and payment instruction flow under Subtle Consulting (Pty) Ltd and can be operationalised immediately.</p>
+          <span class="eyebrow">Business value</span>
+          <h2>A second review gives the tender team a clearer commercial position.</h2>
+          <p>ClearTender helps contractors see the pricing risks before the submission is committed, so the tender can be tightened while there is still time to act.</p>
         </div>
-        <div class="payment-grid">
-          <div class="card payment-card">
-            <div class="badge">Per tender</div>
-            <strong>EFT on invoice</strong>
-            <p>Best for one-off BOQ checks, tender pricing reviews, or deeper commercial reviews where an invoice is needed before work starts.</p>
+        <div class="value-grid">
+          <div class="card value-card">
+            <div class="badge">Margin protection</div>
+            <strong>Catch the quiet misses</strong>
+            <p>Small omissions and soft rates can do more damage than a headline pricing decision. The review looks for those pressure points early.</p>
           </div>
-          <div class="card payment-card">
-            <div class="badge">Fast booking</div>
-            <strong>Secure payment link</strong>
-            <p>Best when the contractor wants a quick pay-now instruction after the intake is confirmed and the package is agreed.</p>
+          <div class="card value-card">
+            <div class="badge">Bid discipline</div>
+            <strong>Make assumptions explicit</strong>
+            <p>Clear assumptions, exclusions, and clarifications reduce avoidable confusion after submission.</p>
           </div>
-          <div class="card payment-card">
-            <div class="badge">Ongoing support</div>
-            <strong>Monthly pricing desk billing</strong>
-            <p>Best for retained pricing desk clients who want a recurring commercial review arrangement across multiple submissions.</p>
+          <div class="card value-card">
+            <div class="badge">Competitive control</div>
+            <strong>Submit with a sharper view</strong>
+            <p>The goal is not to add noise. It is to help the team understand where the tender is strong, exposed, or unclear.</p>
           </div>
         </div>
         <div style="height: 1rem"></div>
-        <div class="payment-note">ClearTender work starts only after the tender pack, review scope, and payment path are confirmed. This keeps the onboarding commercially clean for both sides.</div>
-        <div style="height: 1rem"></div>
-        <div class="card payment-card">
-          <div class="badge">Live card checkout</div>
-          <strong>Yoco hosted payment page</strong>
-          <p>Card checkout is designed to run through a secure Yoco-hosted payment page. Package buttons on this site can redirect directly into a prefilled payment session when the merchant payment page URL is configured.</p>
-        </div>
+        <div class="value-note">ClearTender is strongest when the tender matters, the timeline is tight, and the team needs a calm commercial check before the bid goes out.</div>
       </div>
     </section>
 
@@ -609,9 +694,9 @@
     <section class="section" id="upload">
       <div class="container">
         <div class="section-title">
-          <span class="eyebrow">Upload tender documents form</span>
-          <h2>Send the documents and start the review request.</h2>
-          <p>This is a static site form that prepares an email draft with the information you provide. Attach the tender files to the email before sending.</p>
+          <span class="eyebrow">Tender document handoff form</span>
+          <h2>Prepare the review request email.</h2>
+          <p>This static site prepares an email draft with the information you provide. Choose files to list them in the draft, then attach the actual tender files to the email before sending.</p>
         </div>
         <div class="form-wrap">
           <form id="reviewForm">
@@ -641,29 +726,29 @@
             </div>
             <div class="choice-grid">
               <label class="choice-card">
-                Review package
-                <select name="package" required>
-                  <option value="">Select package</option>
-                  <option>BOQ Check - R1,500</option>
-                  <option>Tender Pricing Review - R2,500</option>
-                  <option>Commercial Tender Review - R4,500</option>
-                  <option>Pricing Desk - R3,000/month</option>
+                Tender service
+                <select name="reviewFocus" required>
+                  <option value="">Select tender service</option>
+                  <option value="tender-review">Tender Review (scope + assumptions) - R950</option>
+                  <option value="tender-pricing">Tender Pricing Review - R1,950</option>
+                  <option value="commercial-tender-review">Commercial Tender Review - R3,950</option>
+                  <option value="pricing-desk">Pricing Desk - from R2,250/month</option>
                 </select>
-                <span>Choose the review level you want booked.</span>
+                <span>Choose the commercial angle you want checked first.</span>
               </label>
-              <label class="choice-card">
-                Payment method
-                <select name="paymentMethod" required>
-                  <option value="">Select payment method</option>
-                  <option>EFT on invoice</option>
-                  <option>Secure payment link</option>
-                  <option>Monthly pricing desk billing</option>
-                </select>
-                <span>Select how you want the booking to be commercialised.</span>
+            </div>
+            <div class="form-grid">
+              <label>
+                Estimated tender value (ZAR)
+                <input name="estimatedValue" type="number" min="0" step="0.01" placeholder="e.g. 250000" />
+              </label>
+              <label>
+                Expected competitors in bid (optional)
+                <input name="competitiveSetCount" type="number" min="0" max="100" step="1" placeholder="e.g. 6" />
               </label>
             </div>
             <label>
-              Upload tender documents
+              Choose tender documents to list
               <input name="documents" type="file" multiple accept=".pdf,.xlsx,.xls,.doc,.docx,.csv,.jpg,.jpeg,.png" />
             </label>
             <p class="help">Accepted files: PDFs, spreadsheets, Word docs, images, and supporting documents. If the browser blocks attachments in email, list the file names below and attach them manually.</p>
@@ -671,10 +756,11 @@
               What should be reviewed?
               <textarea name="notes" required placeholder="Tell us what needs checking: BOQ, rates, exclusions, assumptions, risk items, or anything unusual in the tender pack."></textarea>
             </label>
-            <div class="upload-note" id="fileNote">Selected files will be summarised in the email draft. Attach the actual files manually before sending. Payment and booking instructions will follow the confirmed package and review scope.</div>
+            <div class="upload-note" id="fileNote">Selected files will be listed in the email draft. Attach the actual files manually before sending. The review conversation will start from the tender context and risk areas you provide.</div>
             <div class="form-actions">
               <button class="button button-primary" type="submit">Request a Tender Review</button>
-              <a class="quick-intake" href="mailto:support@subtleconsulting.co.za?subject=ClearTender%20Review%20Request">Email the review pack</a>
+              <button class="button button-secondary" type="button" id="checkoutButton">Generate secure card checkout</button>
+              <a class="quick-intake" href="mailto:cleartender@subtleconsulting.co.za?subject=ClearTender%20Review%20Request">Email the review pack</a>
               <a class="button button-secondary" href="#top">Back to top</a>
             </div>
             <p class="status" id="formStatus" aria-live="polite"></p>
@@ -690,7 +776,7 @@
         <p>ClearTender is built for contractors who want a tighter commercial check, fewer avoidable omissions, and a clearer view of pricing risk before submission.</p>
         <div class="hero-actions" style="margin: 1.4rem 0 0;">
           <a class="button button-primary" href="#upload" style="background: #f5f2eb; color: #13202b;">Request a Tender Review</a>
-          <a class="button button-secondary" href="#offers" style="border-color: rgba(245,242,235,0.2); color: #f5f2eb;">Compare offers</a>
+          <a class="button button-secondary" href="#value" style="border-color: rgba(245,242,235,0.2); color: #f5f2eb;">See the value</a>
         </div>
       </div>
     </section>
@@ -717,109 +803,158 @@
       const status = document.getElementById('formStatus');
       const fileNote = document.getElementById('fileNote');
       const fileInput = form.elements.documents;
-      const payButtons = Array.from(document.querySelectorAll('.pay-now'));
+      const checkoutButton = document.getElementById('checkoutButton');
+      const checkoutPackages = new Set(['tender-review', 'tender-pricing', 'tender-pricing-review', 'commercial-tender-review']);
 
       function summarizeFiles(files) {
-        if (!files || !files.length) return 'No files selected yet.';
-        return Array.from(files).map(f => `${f.name} (${Math.round(f.size / 1024)} KB)`).join('; ');
-      }
-
-      async function buildPaymentLink(payload) {
-        const response = await fetch('/api/payment-link', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.error || 'Payment link could not be created.');
-        }
-        return data.redirectUrl;
+        if (!files || !files.length) return 'No files selected';
+        return Array.from(files).map((f) => f.name).join(', ');
       }
 
       fileInput.addEventListener('change', () => {
         fileNote.textContent = 'Selected files: ' + summarizeFiles(fileInput.files);
       });
 
-      payButtons.forEach((button) => {
-        button.addEventListener('click', async () => {
-          const reviewPackage = button.getAttribute('data-package') || '';
-          const amount = Number(button.getAttribute('data-amount') || '0');
-          status.textContent = 'Preparing secure checkout...';
-          try {
-            const redirectUrl = await buildPaymentLink({
-              reviewPackage,
-              amount,
-              reference: reviewPackage,
-              redirectSuccess: `${window.location.origin}${window.location.pathname}#upload`
-            });
-            window.location.href = redirectUrl;
-          } catch (error) {
-            status.textContent = error.message || 'Payment link could not be created right now. Use the manual request form below.';
-            document.getElementById('upload')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
+      function buildPayload() {
+        const fd = new FormData(form);
+        return {
+          name: String(fd.get('name') || '').trim(),
+          email: String(fd.get('email') || '').trim(),
+          company: String(fd.get('company') || '').trim(),
+          tenderType: String(fd.get('tenderType') || '').trim(),
+          reviewFocus: String(fd.get('reviewFocus') || '').trim(),
+          estimatedValue: String(fd.get('estimatedValue') || '').trim(),
+          competitiveSetCount: String(fd.get('competitiveSetCount') || '').trim(),
+          notes: String(fd.get('notes') || '').trim()
+        };
+      }
+
+      function isValidEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      }
+
+      function setStatus(message) {
+        status.textContent = message || '';
+      }
+
+      function validateForm(payload) {
+        if (!payload.name || !payload.email || !payload.tenderType || !payload.reviewFocus || !payload.notes) {
+          setStatus('Please complete the required fields before requesting a review.');
+          return false;
+        }
+
+        if (!isValidEmail(payload.email)) {
+          setStatus('Please enter a valid email address.');
+          return false;
+        }
+
+        return true;
+      }
+
+      function buildMailBody(payload) {
+        const selected = summarizeFiles(fileInput.files);
+        return [
+          'ClearTender review request',
+          '',
+          `Name: ${payload.name}`,
+          `Email: ${payload.email}`,
+          `Company: ${payload.company || '-'}`,
+          `Tender type: ${payload.tenderType}`,
+          `Tender service: ${payload.reviewFocus}`,
+          `Estimated tender value: ${payload.estimatedValue || 'not provided'}`,
+          `Expected competitors: ${payload.competitiveSetCount || 'not provided'}`,
+          `Selected files: ${selected}`,
+          '',
+          'Review notes:',
+          payload.notes,
+          '',
+          'Please confirm the best review direction and turnaround.'
+        ].join('\n');
+      }
+
+      function updateCheckoutButton() {
+        const currentSelection = form.elements.reviewFocus.value;
+        checkoutButton.style.display = checkoutPackages.has(currentSelection) ? 'inline-flex' : 'none';
+      }
+
+      async function createCheckout(payload) {
+        const response = await fetch('/api/payment-link', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            packageId: payload.reviewFocus,
+            firstName: payload.name,
+            email: payload.email,
+            referenceSuffix: payload.company || payload.name
+          })
         });
+
+        const text = await response.text();
+        let responseBody;
+
+        try {
+          responseBody = JSON.parse(text);
+        } catch (_error) {
+          throw new Error('Invalid checkout response.');
+        }
+
+        if (!response.ok) {
+          throw new Error(responseBody.error || 'Checkout is currently unavailable.');
+        }
+
+        if (!responseBody.redirectUrl) {
+          throw new Error('Checkout did not return a payment URL.');
+        }
+
+        window.location.href = responseBody.redirectUrl;
+      }
+
+      checkoutButton.addEventListener('click', async () => {
+        const payload = buildPayload();
+
+        if (!validateForm(payload)) {
+          return;
+        }
+
+        if (payload.reviewFocus === 'pricing-desk') {
+          setStatus('Pricing Desk is handled manually. Use the email handoff option.');
+          return;
+        }
+
+        if (!checkoutPackages.has(payload.reviewFocus)) {
+          setStatus('This service does not yet support checkout.');
+          return;
+        }
+
+        try {
+          setStatus('Preparing secure checkout...');
+          await createCheckout(payload);
+        } catch (error) {
+          setStatus(String(error?.message || 'Checkout failed.'));
+        }
       });
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const fd = new FormData(form);
-        const name = String(fd.get('name') || '').trim();
-        const email = String(fd.get('email') || '').trim();
-        const company = String(fd.get('company') || '').trim();
-        const tenderType = String(fd.get('tenderType') || '').trim();
-        const selectedPackage = String(fd.get('package') || '').trim();
-        const paymentMethod = String(fd.get('paymentMethod') || '').trim();
-        const notes = String(fd.get('notes') || '').trim();
-        const files = fileInput.files;
+        const payload = buildPayload();
 
-        if (!name || !email || !tenderType || !selectedPackage || !paymentMethod || !notes) {
-          status.textContent = 'Please complete the required fields before requesting a review.';
+        if (!validateForm(payload)) {
           return;
         }
 
-        const selected = summarizeFiles(files);
-        const subject = encodeURIComponent(`ClearTender review request — ${company || name}`);
-        const body = encodeURIComponent([
-          'ClearTender review request',
-          '',
-          `Name: ${name}`,
-          `Email: ${email}`,
-          `Company: ${company || '-'}`,
-          `Tender type: ${tenderType}`,
-          `Requested package: ${selectedPackage}`,
-          `Preferred payment method: ${paymentMethod}`,
-          `Selected files: ${selected}`,
-          '',
-          'Review notes:',
-          notes,
-          '',
-          'Please confirm the best package and turnaround.'
-        ].join('\n'));
+        const subject = encodeURIComponent(`ClearTender review request � ${payload.company || payload.name}`);
+        const body = encodeURIComponent(buildMailBody(payload));
 
-        if (paymentMethod === 'Secure payment link') {
-          status.textContent = 'Preparing secure checkout...';
-          buildPaymentLink({
-            reviewPackage: selectedPackage,
-            amount: Number(selectedPackage.match(/R([\d,]+)/)?.[1]?.replace(/,/g, '') || '0'),
-            reference: `${selectedPackage} - ${company || name}`,
-            firstName: name.split(' ')[0] || name,
-            email,
-            redirectSuccess: `${window.location.origin}${window.location.pathname}#payment`
-          }).then((redirectUrl) => {
-            window.location.href = redirectUrl;
-          }).catch((error) => {
-            status.textContent = error.message || 'Payment link could not be created right now. A manual review request email will open instead.';
-            status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            window.location.href = `mailto:support@subtleconsulting.co.za?subject=${subject}&body=${body}`;
-            });
-            return;
-          }
-
-          status.textContent = 'Preparing your email draft. Attach the actual tender files before sending, or use the email option above if you prefer a manual handoff.';
-          status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        window.location.href = `mailto:support@subtleconsulting.co.za?subject=${subject}&body=${body}`;
+        setStatus('Preparing your email draft. Attach the actual tender files before sending, or use the email option above if you prefer a manual handoff.');
+        status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        window.location.href = `mailto:cleartender@subtleconsulting.co.za?subject=${subject}&body=${body}`;
       });
+
+      form.addEventListener('input', updateCheckoutButton);
+      checkoutButton.style.display = 'none';
+      updateCheckoutButton();
     })();
   </script>
 </body>
