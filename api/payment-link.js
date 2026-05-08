@@ -25,6 +25,8 @@ const MAX_REFERENCE_SUFFIX_LENGTH = 120;
 const MAX_NAME_LENGTH = 120;
 const MAX_EMAIL_LENGTH = 254;
 const MAX_REDIRECT_PATH_LENGTH = 2048;
+const MAX_PAYLOAD_BYTES = 12 * 1024;
+const MAX_PACKAGE_ID_LENGTH = 48;
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -43,6 +45,10 @@ function parseRequestBody(rawBody) {
   }
 
   if (typeof rawBody === 'string') {
+    if (rawBody.length > MAX_PAYLOAD_BYTES) {
+      throw new Error('PAYLOAD_TOO_LARGE');
+    }
+
     try {
       return JSON.parse(rawBody);
     } catch (_error) {
@@ -99,6 +105,35 @@ function getSafeSuccessRedirect(req, redirectPath) {
   }
 }
 
+function isAllowedRequestOrigin(req) {
+  const requestOrigin = getRequestOrigin(req);
+  const incomingOrigin = req.headers.origin || req.headers.referer;
+
+  if (!requestOrigin || !incomingOrigin) {
+    return true;
+  }
+
+  let parsedIncomingOrigin;
+  try {
+    parsedIncomingOrigin = new URL(incomingOrigin, requestOrigin).origin;
+  } catch (_error) {
+    return false;
+  }
+
+  if (parsedIncomingOrigin === requestOrigin) {
+    return true;
+  }
+
+  const allowlist = new Set(
+    (process.env.ALLOWED_CHECKOUT_ORIGINS || requestOrigin)
+      .split(',')
+      .map((value) => value.trim())
+      .filter(Boolean)
+  );
+
+  return allowlist.has(parsedIncomingOrigin);
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     sendJson(res, 405, { error: 'Method not allowed' });
@@ -114,8 +149,13 @@ module.exports = async (req, res) => {
   }
 
   try {
+    if (!isAllowedRequestOrigin(req)) {
+      sendJson(res, 403, { error: 'Request origin is not allowed for checkout.' });
+      return;
+    }
+
     const body = parseRequestBody(req.body);
-    const packageId = toSafeTrimmedString(body.packageId, 48);
+    const packageId = toSafeTrimmedString(body.packageId, MAX_PACKAGE_ID_LENGTH);
     const selectedPackage = REVIEW_PACKAGES[packageId];
     const firstName = toSafeTrimmedString(body.firstName, MAX_NAME_LENGTH);
     const email = toSafeTrimmedString(body.email, MAX_EMAIL_LENGTH);
@@ -158,7 +198,7 @@ module.exports = async (req, res) => {
       }
     });
   } catch (_error) {
-    if (String(_error?.message || '').includes('INVALID_')) {
+    if (String(_error?.message || '').match(/^(INVALID_|PAYLOAD_)/)) {
       sendJson(res, 400, { error: 'Invalid request payload.' });
       return;
     }

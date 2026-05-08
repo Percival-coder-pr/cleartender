@@ -6,6 +6,7 @@ const handler = require('../api/payment-link');
 function callPaymentLink({ method = 'POST', body = {}, envUrl = 'https://pay.yoco.com/merchant' } = {}) {
   const previousPaymentPageUrl = process.env.YOCO_PAYMENT_PAGE_URL;
   const previousCheckoutUrl = process.env.YOCO_CHECKOUT_URL;
+  const customHeaders = arguments[0]?.headers;
 
   process.env.YOCO_PAYMENT_PAGE_URL = envUrl;
   delete process.env.YOCO_CHECKOUT_URL;
@@ -15,7 +16,8 @@ function callPaymentLink({ method = 'POST', body = {}, envUrl = 'https://pay.yoc
       method,
       headers: {
         host: 'cleartender.vercel.app',
-        'x-forwarded-proto': 'https'
+        'x-forwarded-proto': 'https',
+        ...customHeaders
       },
       body
     };
@@ -180,9 +182,37 @@ test('rejects unsupported methods', async () => {
   assert.equal(response.statusCode, 405);
 });
 
+test('rejects checkout requests from disallowed origins', async () => {
+  const response = await callPaymentLink({
+    body: {
+      packageId: 'tender-review',
+      firstName: 'ACME Leads',
+      email: 'admin@example.com'
+    },
+    headers: { origin: 'https://evil.example' }
+  });
+
+  assert.equal(response.statusCode, 403);
+  assert.equal(response.body.error, 'Request origin is not allowed for checkout.');
+});
+
 test('rejects malformed JSON payloads', async () => {
   const response = await callPaymentLink({
     body: '{ packageId: \"bad json\" }'
+  });
+
+  assert.equal(response.statusCode, 400);
+  assert.equal(response.body.error, 'Invalid request payload.');
+});
+
+test('rejects oversized request payloads', async () => {
+  const response = await callPaymentLink({
+    body: JSON.stringify({
+      packageId: 'tender-review',
+      firstName: 'A'.repeat(130),
+      email: 'admin@example.com',
+      notes: 'X'.repeat(13 * 1024)
+    })
   });
 
   assert.equal(response.statusCode, 400);
