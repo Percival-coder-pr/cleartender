@@ -703,15 +703,15 @@
             <div class="form-grid">
               <label>
                 Your name
-                <input name="name" type="text" required placeholder="Your full name" />
+                <input name="name" type="text" required placeholder="Your full name" maxlength="120" />
               </label>
               <label>
                 Email address
-                <input name="email" type="email" required placeholder="name@company.co.za" />
+                <input name="email" type="email" required placeholder="name@company.co.za" maxlength="254" />
               </label>
               <label>
                 Company
-                <input name="company" type="text" placeholder="Company name" />
+                <input name="company" type="text" placeholder="Company name" maxlength="160" />
               </label>
               <label>
                 Tender type
@@ -752,10 +752,22 @@
               <input name="documents" type="file" multiple accept=".pdf,.xlsx,.xls,.doc,.docx,.csv,.jpg,.jpeg,.png" />
             </label>
             <p class="help">Accepted files: PDFs, spreadsheets, Word docs, images, and supporting documents. If the browser blocks attachments in email, list the file names below and attach them manually.</p>
+<<<<<<< HEAD
             <label>
               What should be reviewed?
               <textarea name="notes" required placeholder="Tell us what needs checking: BOQ, rates, exclusions, assumptions, risk items, or anything unusual in the tender pack."></textarea>
             </label>
+=======
+              <label>
+                What should be reviewed?
+                <textarea
+                  name="notes"
+                  required
+                  maxlength="2500"
+                  placeholder="Tell us what needs checking: BOQ, rates, exclusions, assumptions, risk items, or anything unusual in the tender pack."
+                ></textarea>
+              </label>
+>>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
             <div class="upload-note" id="fileNote">Selected files will be listed in the email draft. Attach the actual files manually before sending. The review conversation will start from the tender context and risk areas you provide.</div>
             <div class="form-actions">
               <button class="button button-primary" type="submit">Request a Tender Review</button>
@@ -805,7 +817,23 @@
       const fileInput = form.elements.documents;
       const checkoutButton = document.getElementById('checkoutButton');
       const checkoutPackages = new Set(['tender-review', 'tender-pricing', 'tender-pricing-review', 'commercial-tender-review']);
+<<<<<<< HEAD
 
+=======
+      const MAX_TEXT_LENGTH = 2000;
+
+      function sanitizeText(value, maxLength = MAX_TEXT_LENGTH) {
+        return String(value || '')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .slice(0, maxLength);
+      }
+
+      function sanitizeEmail(value) {
+        return String(value || '').trim().slice(0, 254);
+      }
+
+>>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
       function summarizeFiles(files) {
         if (!files || !files.length) return 'No files selected';
         return Array.from(files).map((f) => f.name).join(', ');
@@ -818,6 +846,7 @@
       function buildPayload() {
         const fd = new FormData(form);
         return {
+<<<<<<< HEAD
           name: String(fd.get('name') || '').trim(),
           email: String(fd.get('email') || '').trim(),
           company: String(fd.get('company') || '').trim(),
@@ -826,6 +855,16 @@
           estimatedValue: String(fd.get('estimatedValue') || '').trim(),
           competitiveSetCount: String(fd.get('competitiveSetCount') || '').trim(),
           notes: String(fd.get('notes') || '').trim()
+=======
+          name: sanitizeText(fd.get('name'), 120),
+          email: sanitizeEmail(fd.get('email')),
+          company: sanitizeText(fd.get('company'), 160),
+          tenderType: sanitizeText(fd.get('tenderType'), 120),
+          reviewFocus: sanitizeText(fd.get('reviewFocus'), 80),
+          estimatedValue: String(fd.get('estimatedValue') || '').trim(),
+          competitiveSetCount: String(fd.get('competitiveSetCount') || '').trim(),
+          notes: sanitizeText(fd.get('notes'), 2500)
+>>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
         };
       }
 
@@ -848,6 +887,35 @@
           return false;
         }
 
+<<<<<<< HEAD
+=======
+        if (payload.name.length > 120) {
+          setStatus('Your name is too long.');
+          return false;
+        }
+
+        if (payload.notes.length > 2500) {
+          setStatus('Review notes are too long. Please shorten your message.');
+          return false;
+        }
+
+        if (payload.estimatedValue) {
+          const estimatedValue = Number(payload.estimatedValue);
+          if (!Number.isFinite(estimatedValue) || estimatedValue < 0) {
+            setStatus('Estimated tender value must be a positive number.');
+            return false;
+          }
+        }
+
+        if (payload.competitiveSetCount) {
+          const competitorCount = Number(payload.competitiveSetCount);
+          if (!Number.isInteger(competitorCount) || competitorCount < 0 || competitorCount > 1000) {
+            setStatus('Expected competitor count must be between 0 and 1000.');
+            return false;
+          }
+        }
+
+>>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
         return true;
       }
 
@@ -944,7 +1012,11 @@
           return;
         }
 
+<<<<<<< HEAD
         const subject = encodeURIComponent(`ClearTender review request � ${payload.company || payload.name}`);
+=======
+        const subject = encodeURIComponent(`ClearTender review request - ${payload.company || payload.name}`);
+>>>>>>> 3998846 (Harden ClearTender checkout and intake against malformed input)
         const body = encodeURIComponent(buildMailBody(payload));
 
         setStatus('Preparing your email draft. Attach the actual tender files before sending, or use the email option above if you prefer a manual handoff.');
