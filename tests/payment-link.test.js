@@ -62,6 +62,10 @@ test('uses server-owned package pricing for both legacy and tender-review packag
   });
 
   assert.equal(response.statusCode, 200);
+  assert.equal(response.headers['Cache-Control'], 'no-store, no-cache, must-revalidate, max-age=0');
+  assert.equal(response.headers['Pragma'], 'no-cache');
+  assert.equal(response.headers['Expires'], '0');
+
   const redirectUrl = new URL(response.body.redirectUrl);
 
   assert.equal(redirectUrl.searchParams.get('amount'), '950.00');
