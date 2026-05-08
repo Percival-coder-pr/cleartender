@@ -57,6 +57,10 @@ function parseRequestBody(rawBody) {
   }
 
   if (rawBody instanceof ArrayBuffer) {
+    if (rawBody.byteLength > MAX_PAYLOAD_BYTES) {
+      throw new Error('PAYLOAD_TOO_LARGE');
+    }
+
     try {
       return JSON.parse(new TextDecoder().decode(rawBody));
     } catch (_error) {
@@ -64,7 +68,23 @@ function parseRequestBody(rawBody) {
     }
   }
 
+  if (Buffer.isBuffer(rawBody)) {
+    if (rawBody.length > MAX_PAYLOAD_BYTES) {
+      throw new Error('PAYLOAD_TOO_LARGE');
+    }
+
+    return parseRequestBody(new TextDecoder().decode(rawBody));
+  }
+
   if (rawBody && typeof rawBody === 'object') {
+    try {
+      if (JSON.stringify(rawBody).length > MAX_PAYLOAD_BYTES) {
+        throw new Error('PAYLOAD_TOO_LARGE');
+      }
+    } catch (_error) {
+      throw new Error('INVALID_PAYLOAD');
+    }
+
     return rawBody;
   }
 

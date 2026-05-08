@@ -218,3 +218,17 @@ test('rejects oversized request payloads', async () => {
   assert.equal(response.statusCode, 400);
   assert.equal(response.body.error, 'Invalid request payload.');
 });
+
+test('rejects oversized object payloads', async () => {
+  const response = await callPaymentLink({
+    body: {
+      packageId: 'tender-review',
+      firstName: 'ACME Leads',
+      email: 'admin@example.com',
+      notes: 'X'.repeat(13 * 1024)
+    }
+  });
+
+  assert.equal(response.statusCode, 400);
+  assert.equal(response.body.error, 'Invalid request payload.');
+});
